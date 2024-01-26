@@ -25,7 +25,8 @@
             });
         }
         function gerarQRCode() {
-            var textoParaQRCode = link();
+            // link()
+            var textoParaQRCode = 'https://game-server.up.railway.app/KJDCIA7899nm8u7N9yn987NO';
             const code = document.getElementById("qrcode");
             var qrcode = new QRCode(code, {
                 text: textoParaQRCode,
