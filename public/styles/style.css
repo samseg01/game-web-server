@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.computador {
+    height: 400px;
+    width: 200px;
+    border: 2px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.objeto {
+    display: none;
+    height: 30px;
+    width: 30px;
+    background-color: black;
+    position: relative;
+    top:50%;
+}
+.qrcode {
+    display: block;
+}
+button {
+    width: 50px;
+    height: 20px;
+}
