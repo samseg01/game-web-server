@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const { hostname } = require('os');
 const socketIO = require('socket.io');
 
 const app = express();
@@ -8,13 +9,18 @@ const io = socketIO(server);
 
 
 // Defina a rota padrão para servir seu cliente
-app.get('/console', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/console.html');
 });
+app.get('/KJDCIA7899nm8u7N9yn987NO', (req, res) => {
+  res.sendFile(__dirname + '/views/controle.html');
+});
+app.get('/getconfig', (req, res) => {
+  // Simula a obtenção de dados no backend
+  const dadosDoBackend = { mensagem: `http://${hostname()}:${PORT}/KJDCIA7899nm8u7N9yn987NO` };
 
-app.get('/controle', (req, res) => {
-    res.sendFile(__dirname + '/views/controle.html');
-  });
+  res.json(dadosDoBackend);
+});
 // Lógica de conexão Socket.IO
 const pares = new Map();
 

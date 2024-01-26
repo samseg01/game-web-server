@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>console</title>
-    <link rel="stylesheet" href="/styles/style.css">
+    <!-- <link rel="stylesheet" href="/styles/style.css"> -->
 </head>
 <body>
     <div class="computador">
         <div class="objeto" id="objeto"></div>
-        <div class="qrcode" id="qrcode"></div>
     </div>
+    <div class="qrcode" id="qrcode"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script>
+        async function link(){
+            await fetch('/getconfig') 
+            .then(response => response.json())
+            .then(data => {
+                console.log('Dados recebidos do backend:', data.mensagem);
+            })
+            .catch(error => {
+                console.error('Erro ao obter dados do backend:', error);
+            });
+        }
+        function gerarQRCode() {
+            var textoParaQRCode = link();
+            const code = document.getElementById("qrcode");
+            var qrcode = new QRCode(code, {
+                text: textoParaQRCode,
+                width: 128,
+                height: 128
+            });
+        }
+        gerarQRCode();
+
         const socket = io();
-
-        // socket.emit('mensagem', 'Olá, servidor!, sou 11111');
-
+        
         // Lidar com mensagens recebidas do servidor
         let valorTop = 0;
         let valorLeft = 0;
@@ -73,7 +93,7 @@
             top: 0px;
         }
         .qrcode {
-            display: none;
+            display: block;
         }
     </style>
 </body>
