@@ -2,34 +2,50 @@ const express = require('express');
 const http = require('http');
 const { hostname } = require('os');
 const socketIO = require('socket.io');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-
-// Defina a rota padrão para servir seu cliente
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/console.html');
 });
-app.get('/KJDCIA7899nm8u7N9yn987NO', (req, res) => {
-  res.sendFile(__dirname + '/views/controle.html');
-});
-app.get('/getconfig', (req, res) => {
-  // Simula a obtenção de dados no backend
-  const dadosDoBackend = { mensagem: `http://${hostname()}:${PORT}/KJDCIA7899nm8u7N9yn987NO` };
 
-  res.json(dadosDoBackend);
+app.use(bodyParser.json());
+let id;
+app.post('/config', (req, res) => {
+  console.log('>> id: ', req.body);
+  console.log(['host: '+req.headers.host, 'protocolo: '+req.protocol, 'ip: '+req.ip, 'ips: '+req.ips]);
+  
+    id = req.body.mensagem_front
+    //connection(`${id}-1`);
+    getPage2();
+  res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&id=${req.body.mensagem_front}`});
 });
-// Lógica de conexão Socket.IO
-const pares = new Map();
+
+function getPage2(){
+  
+  console.log(id);
+  app.get(`/KJDCIA7899nm8u7N9yn987NO&id=${id}`, (req, res) => {
+    res.sendFile(__dirname + '/views/controle.html');
+    //connection(`${id}-2`);
+  });
+}
+
+  // Lógica de conexão Socket.IO
+  const pares = new Map();
+
+  // const dispositivos = new Map();
 
 io.on('connection', (socket) => {
-  console.log('Novo cliente conectado');
-
+  console.log('>>> Novo cliente conectado | socket id: ',socket.id);
   // Obtém o IP do cliente
   const ip = socket.handshake.address;
-  console.log('ip ', ip);
+  //console.log('ip ', ip, typeof(ip));
+
+  //console.log('achado novo dispositivo com ID', randomID); 
+
 
   // Adicione o socket à lista de espera
   const socketsEmEspera = Array.from(io.sockets.sockets.values())
@@ -45,7 +61,7 @@ io.on('connection', (socket) => {
     io.to(socket.id).emit('pareamento', { parceiro: outroSocket.id });
     io.to(outroSocket.id).emit('pareamento', { parceiro: socket.id });
 
-    console.log(`Dispositivos ${socket.id} e ${outroSocket.id} emparelhados.`);
+    console.log(`>>> Dispositivos ${socket.id} e ${outroSocket.id} emparelhados.`);
   } else {
     // Não há dispositivos suficientes para emparelhamento, aguarde
     console.log(`Aguardando mais dispositivos para emparelhamento: ${socket.id}`);
@@ -62,7 +78,7 @@ io.on('connection', (socket) => {
 
   // Lidar com desconexões
   socket.on('disconnect', () => {
-    console.log(`Cliente desconectado: ${socket.id}`);
+    console.log(`>>> Cliente desconectado: ${socket.id}`);
 
     // Remova o par do mapa
     const parceiroId = pares.get(socket.id);
@@ -76,6 +92,7 @@ io.on('connection', (socket) => {
     }
   });
 });
+
 
 // Inicie o servidor
 const PORT = process.env.PORT || 3000;

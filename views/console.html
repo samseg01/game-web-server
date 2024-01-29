@@ -15,18 +15,23 @@
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script>
         async function link(){
-            await fetch('/getconfig') 
-            .then(response => response.json())
-            .then(data => {
-                console.log('Dados recebidos do backend:', data.mensagem);
-            })
-            .catch(error => {
-                console.error('Erro ao obter dados do backend:', error);
+            let random_ID = parseInt(Math.random() * 100000000);
+            console.log(random_ID);
+
+            const response = await fetch('/config', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({mensagem_front : random_ID}),
             });
+            const result = await response.json();
+            console.log("Success:", result.mensagem_back);
+            return result.mensagem_back;
         }
-        function gerarQRCode() {
-            // link()
-            var textoParaQRCode = 'https://game-server.up.railway.app/KJDCIA7899nm8u7N9yn987NO';
+        
+        async function gerarQRCode() {
+            var textoParaQRCode = await link();
             const code = document.getElementById("qrcode");
             var qrcode = new QRCode(code, {
                 text: textoParaQRCode,
@@ -37,7 +42,6 @@
         gerarQRCode();
 
         const socket = io();
-        
         // Lidar com mensagens recebidas do servidor
         let valorTop = 0;
         let valorLeft = 0;
