@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script>
+        let random_ID = parseInt(Math.random() * 100000000);
         async function link(){
-            let random_ID = parseInt(Math.random() * 100000000);
             console.log(random_ID);
 
             const response = await fetch('/config', {
@@ -42,6 +42,7 @@
         gerarQRCode();
 
         const socket = io();
+
         // Lidar com mensagens recebidas do servidor
         let valorTop = 0;
         let valorLeft = 0;
