@@ -92,7 +92,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`>>> Cliente desconectado: ${socket.id}`);
-    console.log(socketsReference.length);
     socketsReference.forEach(element => {
     })
     //exclui da lista
@@ -101,35 +100,6 @@ io.on('connection', (socket) => {
       socketsReference.splice(indice, 1);
     }
   });
-
-  // io.to(socket.id).emit('pareamento', { parceiro: outroSocket.id });
-  // io.to(outroSocket.id).emit('pareamento', { parceiro: socket.id });
-  
-
-  // const ip = socket.handshake.address;
-
-  // // Adicione o socket à lista de espera
-  // const socketsEmEspera = Array.from(io.sockets.sockets.values())
-  //   .filter((s) => s !== socket && !pares.has(s.id) && s.handshake.address === ip);
-
-  // if (socketsEmEspera.length > 0) {
-  //   // Encontre um par disponível e emparelhe
-  //   const outroSocket = socketsEmEspera[Math.floor(Math.random() * socketsEmEspera.length)];
-  //   pares.set(socket.id, outroSocket.id);
-  //   pares.set(outroSocket.id, socket.id);
-
-    // Informe ambos os lados do emparelhamento
-
-
-    // console.log(`> Dispositivos ${socket.id} e ${outroSocket.id} emparelhados.`);
-  // } else {
-  //   // Não há dispositivos suficientes para emparelhamento, aguarde
-  //   console.log(`Aguardando mais dispositivos para emparelhamento: ${socket.id}...`);
-  // }
-
-  
-
-  // // Lidar com desconexões
   
 });
 
