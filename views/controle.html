@@ -17,31 +17,6 @@
             <button id="enter"></button>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        // Enviar uma mensagem para o servido
-        // Lidar com mensagens recebidas do servidor
-        socket.on('mensagem', (mensagem) => {
-        // console.log('Mensagem do servidor:', mensagem);
-        });
-
-        document.getElementById('esquerda').addEventListener('click', () =>{
-            socket.emit('mensagem', 'esquerda');
-        })
-        document.getElementById('direita').addEventListener('click', () =>{
-            socket.emit('mensagem', 'direita');
-        })
-        document.getElementById('cima').addEventListener('click', () =>{
-            socket.emit('mensagem', 'cima');
-        })
-        document.getElementById('baixo').addEventListener('click', () =>{
-            socket.emit('mensagem', 'baixo');
-        })      
-    </script>
-
     <style>
         * {
             margin: 0;
@@ -57,8 +32,9 @@
             justify-content: center;
         }
         .controle {
-            height: 300px;
-            width: 600px;
+            height: 70%;
+            width: auto;
+            max-height: 250px;
             border: 2px solid black;
             display: flex;
             div {
@@ -106,5 +82,40 @@
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script>
+        function tamanho(){
+            const controle = document.querySelector('.controle');
+            let altura = getComputedStyle(controle).height.split('p');
+            let largura = getComputedStyle(controle).width.split('p');
+            
+            if(parseInt(largura[0]) < parseInt(altura[0])*2){
+                controle.style.width = (parseInt(altura)*2)+'px';
+            }
+            
+        }
+        setInterval(tamanho, 100);
+
+        const socket = io();
+
+        // Enviar uma mensagem para o servido
+        // Lidar com mensagens recebidas do servidor
+        socket.on('mensagem', (mensagem) => {
+        // console.log('Mensagem do servidor:', mensagem);
+        });
+
+        document.getElementById('esquerda').addEventListener('click', () =>{
+            socket.emit('mensagem', 'esquerda');
+        })
+        document.getElementById('direita').addEventListener('click', () =>{
+            socket.emit('mensagem', 'direita');
+        })
+        document.getElementById('cima').addEventListener('click', () =>{
+            socket.emit('mensagem', 'cima');
+        })
+        document.getElementById('baixo').addEventListener('click', () =>{
+            socket.emit('mensagem', 'baixo');
+        })      
+    </script>
 </body>
 </html>
