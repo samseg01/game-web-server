@@ -20,9 +20,6 @@ app.post('/config', (req, res) => {
   boo = true;
 
   console.log('>>>> GAME_CONSOLE LIGADO!!!');
-  console.log('>> UID: ',UID, " | ", typeof(UID));
-  console.log(['host: '+ req.headers.host, 'protocolo: '+ req.protocol, 'ip: '+ req.ip, 'ips: '+ req.ips]);
-
   res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&${UID}`});
 });
 let i=1;
@@ -33,7 +30,6 @@ setInterval(() =>{
       console.log('>>>>>>>>>>>> REQ', req.url);
       //uuUID vindo do link aberto na tela 1
       UID = parseInt(req.url.split('&')[1]);
-      console.log('ENTROU GET2');
       res.sendFile(__dirname + '/views/controle.html');
     });
   }
@@ -52,15 +48,13 @@ io.on('connection', (socket) => {
   //verifica se o UID do socket da sessão já é referente a uma sala já existente
   //se for referente a uma sala existete, adiciona o socket a sala
   //se não for referente, determina que a sala não existe, assim cria a sala com o UID do socket da sessão e adiciona o socket
-  
   if(socketsReference.length === 0){
     let sala = criaSala();
     console.log('>>> sala criada:', sala);
     adicionaUsuario(socketIdTela, sala);
-    console.log('======> PRIMEIRA POSIÇÃO DO ARRAY PREENCHIDA')
+    //======> PRIMEIRA POSIÇÃO DO ARRAY PREENCHIDA
   }else if(socketsReference.length > 0){
     if(verificaSalaUIDexistente(socketsReference, socketIdTela) === true){
-      console.log('[NEM SEI MAIS|')
       adicionaUsuario(socketIdTela,'');
     }else if(verificaSalaUIDexistente(socketsReference, socketIdTela) === false){
       let sala = criaSala();
@@ -68,19 +62,18 @@ io.on('connection', (socket) => {
       adicionaUsuario(socketIdTela, sala);
     }                
   }
+
   function verificaSalaUIDexistente(reference, socketUID){
     //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
 
     for(let i=0; i<reference.length; i++){
       let element = reference[i];
       if(element[1] === socketUID[1]){
-        console.log('====================>',element[1], socketUID[1]);
         return true
       }
     }
     return false
   }
-
   function criaSala(){
     let salaString = String(parseInt(Math.random() * 1000000));
     return salaString+'-BR01';
@@ -158,11 +151,10 @@ io.on('connection', (socket) => {
     if (indice !== -1) {
       socketsReference.splice(indice, 1);
     }
-    if(socketsReference.length === 0){
-      console.log('> não há clients logados.');
-    }
   });
-  
+  if(socketsReference.length === 0){
+    console.log('> não há clients logados.');
+  }
 });
 // }
 
