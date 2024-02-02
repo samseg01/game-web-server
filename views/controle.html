@@ -6,17 +6,32 @@
     <title>controle</title>
 </head>
 <body>
-    <div class="controle">
-        <div class="movimento-content">
-            <button id="cima" class="cima"></button>
-            <button id="esquerda" class="esquerda"></button>
-            <button id="baixo" class="baixo"></button>
-            <button id="direita" class="direita"></button>
+    <section class="controle">
+        <div class="direction content">
+            <div class="container">
+                <div class="linha"></div>
+                <div class="linha">
+                    <div class="bloco"></div>
+                    <button class="cima bloco" id="cima"></button>
+                    <div class="bloco"></div>
+                </div>
+                <div class="linha">
+                    <button class="esquerda bloco" id="esquerda"></button>
+                    <div class="bloco"></div>
+                    <button class="direita bloco" id="direita"></button>
+                </div>
+                <div class="linha">
+                    <div class="bloco"></div>
+                    <button class="baixo bloco" id="baixo"></button>
+                    <div class="bloco"></div>
+                </div>
+                <div class="linha"></div>
+            </div>
         </div>
-        <div class="enter-content">
+        <div class="enter content">
             <button id="enter"></button>
         </div>
-    </div>
+    </section>
     <style>
         * {
             margin: 0;
@@ -24,9 +39,8 @@
             box-sizing: border-box;
         }
         body {
-            height: 100vh;
             width: 100%;
-
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -35,50 +49,46 @@
             height: auto;
             width: 80%;
             border: 2px solid black;
+
             display: flex;
-            div {
-                height: 100%;
-                width: 50%;
-            }
+            flex-direction: row;
+            background-color: #b2a052;
         }
-        .movimento-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-        }
-        .cima {
-            grid-column-start: 3;
-            grid-column-end: 4;
-            grid-row-start: 2;
-            grid-row-end: 3;
-        }
-        .esquerda {
-            grid-column-start: 2;
-            grid-column-end: 3;
-            grid-row-start: 3;
-            grid-row-end: 4;
-        }
-        .baixo {
-            grid-column-start: 3;
-            grid-column-end: 4;
-            grid-row-start: 4;
-            grid-row-end: 5;
-        }
-        .direita {
-            grid-column-start: 4;
-            grid-column-end: 5;
-            grid-row-start: 3;
-            grid-row-end: 4;
-        }
-        .enter-content {
+        .content {
+            width: 50%;
+            height: 100%;
             display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        .direction {
+        }   
+        .container{
+            width: 80%;
+            height: 80%;
+        }
+        .linha {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
             button {
-                width: 50%;
-                height: 50%;
-                border-radius: 100%;
             }
+        }
+        .bloco {
+            width: 20%;
+            height: 100%;
+            border-radius: 4px;
+        }
+        .enter {
+        }
+        #enter {
+            height: 50%;
+            width: 50%;
+            border-radius: 100%;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
