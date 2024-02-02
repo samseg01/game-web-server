@@ -11,83 +11,142 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/console.html');
 });
 
+let boo = false;
+let UID;
+
 app.use(bodyParser.json());
-
-let id;
-
 app.post('/config', (req, res) => {
-  id = req.body.mensagem_front;
+  UID = req.body.mensagem_front;
+  boo = true;
 
   console.log('>>>> GAME_CONSOLE LIGADO!!!');
-  console.log('>> id: ',id, " | ", typeof(id));
+  console.log('>> UID: ',UID, " | ", typeof(UID));
   console.log(['host: '+ req.headers.host, 'protocolo: '+ req.protocol, 'ip: '+ req.ip, 'ips: '+ req.ips]);
 
-  res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO`});
-
+  res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&${UID}`});
 });
+let i=1;
 
-app.get(`/KJDCIA7899nm8u7N9yn987NO`, (req, res) => {
-  res.sendFile(__dirname + '/views/controle.html');
-});
-
-const pares = new Map();
+setInterval(() =>{
+  if(boo==true){
+    app.get(`/KJDCIA7899nm8u7N9yn987NO&${UID}`, (req, res) => {
+      console.log('>>>>>>>>>>>> REQ', req.url);
+      //uuUID vindo do link aberto na tela 1
+      UID = parseInt(req.url.split('&')[1]);
+      console.log('ENTROU GET2');
+      res.sendFile(__dirname + '/views/controle.html');
+    });
+  }
+}, 1000);
 
 let sala_cont = 0;
 let sala;
 let socketsReference = [];
 
 io.on('connection', (socket) => {
-  console.log('>>> Novo cliente conectado | socket id: ',socket.id, ' | UID: ', id);
+  console.log('>>> Novo cliente conectado | socket id: ',socket.id, ' | UID: ', UID);
 
+  let socketIdTela = [socket, UID];
+                  //[SmI9vUmNBZ-6_qAGAAAD, 18499632]
+
+  //verifica se o UID do socket da sessão já é referente a uma sala já existente
+  //se for referente a uma sala existete, adiciona o socket a sala
+  //se não for referente, determina que a sala não existe, assim cria a sala com o UID do socket da sessão e adiciona o socket
+  
+  if(socketsReference.length === 0){
+    let sala = criaSala();
+    console.log('>>> sala criada:', sala);
+    adicionaUsuario(socketIdTela, sala);
+    console.log('======> PRIMEIRA POSIÇÃO DO ARRAY PREENCHIDA')
+  }else if(socketsReference.length > 0){
+    if(verificaSalaUIDexistente(socketsReference, socketIdTela) === true){
+      console.log('[NEM SEI MAIS|')
+      adicionaUsuario(socketIdTela,'');
+    }else if(verificaSalaUIDexistente(socketsReference, socketIdTela) === false){
+      let sala = criaSala();
+      console.log('>>> sala criada:', sala);
+      adicionaUsuario(socketIdTela, sala);
+    }                
+  }
+  function verificaSalaUIDexistente(reference, socketUID){
+    //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
+
+    for(let i=0; i<reference.length; i++){
+      let element = reference[i];
+      if(element[1] === socketUID[1]){
+        console.log('====================>',element[1], socketUID[1]);
+        return true
+      }
+    }
+    return false
+  }
 
   function criaSala(){
     let salaString = String(parseInt(Math.random() * 1000000));
-    return salaString;
+    return salaString+'-BR01';
+  }  
+  function adicionaUsuario(socketO, salaCriada){
+    console.log(socketIO[1], salaCriada);
+    if(salaCriada === null || salaCriada === ""){
+      //verifica se ha uma sala com UID ja existente
+      socketsReference.forEach(element =>{
+      //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
+        if(element[1] === socketO[1]){
+            
+          let array = Array.from(element[0]);
+          let sala = array[1];
+          //socketO[0] === socket
+          //socketO[1] === UID
+          socketO[0].join(sala);
+
+          console.log('Já existe uma sala com esse UID');        
+          console.log(`>>> Usuario adicionado a sala - ${sala} :`,socket.id);
+          let socketArray = [socket.rooms, socketO[1]];
+          socketsReference.push(socketArray);
+          console.log('[OK] > SALA FECHADA COM DOIS DISPOSITIVOS');
+        }
+      })
+    }else{
+      socketO[0].join(salaCriada);
+
+      console.log(`>>> Usuario adicionado a sala - ${salaCriada} :`,socket.id);
+      let socketArray = [socket.rooms, socketIdTela[1]];
+      socketsReference.push(socketArray);
+
+    }
   }
 
-  if(sala_cont === 0){
-    sala = criaSala();
-    console.log('>>> sala criada:', sala)
-  }
-  if(sala_cont < 2){
-    socket.join(sala);
-    console.log(`>>> Usuario adicionado a sala - ${sala} :`,socket.id);
-    socketsReference.push(socket);
-    
-    sala_cont = sala_cont+1;
-  }
-
-  if(sala_cont === 2){
-    sala_cont=0;
-    console.log(`> SALA ${sala} FECHADA!!! - CONTEM DOIS DISPOSITIVOS`);
-  }
 
   // Lógica para lidar com eventos do cliente
   socket.on('mensagem', (mensagem) => {
     id = socket.id;
 
-    socketsReference.forEach(element =>{
-      let array = Array.from(element.rooms);
-      let sala = array[1];
-      if(socket.id == array[0]){
-        console.log(`>>> Mensagem recebida de ${id} que pertence a sala ${sala}: ${mensagem}`);
+    let room
+    let roomArray
+    let idSocket
+    //socketsReference
+    //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
+    socketsReference.forEach(e => {
+      room = e[0];
+      roomArray = Array.from(room);
+      idSocket = roomArray[0];
+      if(socket.id == idSocket[0]){
+        console.log(`>>> Mensagem recebida de ${id} que pertence a sala ${roomArray[1]}: ${mensagem}`);
       }
     })
+    let enviado = false;
+    socketsReference.forEach(element =>{
+      let sala = roomArray[1];
 
-      let enviado = false;
-      socketsReference.forEach(element =>{
-        let array = Array.from(element.rooms);
-        let sala = array[1];
-
-        if(array.includes(id)){
-          //para mandar apenas uma vez a mensagem
-          if(enviado === false){
-            io.to(sala).emit('mensagem', mensagem);
-            enviado = true;
-          }
+      // if(array.includes(id)){
+        //para mandar apenas uma vez a mensagem
+        if(enviado === false){
+          io.to(sala).emit('mensagem', mensagem);
+          enviado = true;
         }
+      // }
 
-      })
+    })
   });
 
   socket.on('disconnect', () => {
@@ -99,11 +158,14 @@ io.on('connection', (socket) => {
     if (indice !== -1) {
       socketsReference.splice(indice, 1);
     }
+    if(socketsReference.length === 0){
+      console.log('> não há clients logados.');
+    }
   });
   
 });
+// }
 
-// Inicie o servidor
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Servidor ouvindo na porta ${PORT}`);
