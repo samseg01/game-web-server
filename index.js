@@ -27,7 +27,6 @@ let i=1;
 setInterval(() =>{
   if(boo==true){
     app.get(`/KJDCIA7899nm8u7N9yn987NO&${UID}`, (req, res) => {
-      console.log('>>>>>>>>>>>> REQ', req.url);
       //uuUID vindo do link aberto na tela 1
       UID = parseInt(req.url.split('&')[1]);
       res.sendFile(__dirname + '/views/controle.html');
@@ -89,7 +88,7 @@ io.on('connection', (socket) => {
           //socketO[1] === UID
           socketO[0].join(sala);
 
-          console.log('Já existe uma sala com esse UID');        
+          console.log('[ALERT] > Já existe uma sala com esse UID');        
           console.log(`>>> Usuario adicionado a sala - ${sala} :`,socket.id);
           let socketArray = [socket.rooms, socketO[1]];
           socketsReference.push(socketArray);
