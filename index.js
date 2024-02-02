@@ -19,7 +19,7 @@ app.post('/config', (req, res) => {
   UID = req.body.mensagem_front;
   boo = true;
 
-  console.log('>>>> GAME_CONSOLE LIGADO!!!');
+  console.log('>>> GAME_CONSOLE LIGADO!!!');
   res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&${UID}`});
 });
 let i=1;
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
       adicionaUsuario(socketIdTela,'');
     }else if(verificaSalaUIDexistente(socketsReference, socketIdTela) === false){
       let sala = criaSala();
-      console.log('>>> sala criada:', sala);
+      console.log('> sala criada:', sala);
       adicionaUsuario(socketIdTela, sala);
     }                
   }
@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
           socketO[0].join(sala);
 
           console.log('[ALERT] > Já existe uma sala com esse UID');        
-          console.log(`>>> Usuario adicionado a sala - ${sala} :`,socket.id);
+          console.log(`> Usuario adicionado a sala - ${sala} :`,socket.id);
           let socketArray = [socket.rooms, socketO[1]];
           socketsReference.push(socketArray);
           console.log('[OK] > SALA FECHADA COM DOIS DISPOSITIVOS');
@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
     }else{
       socketO[0].join(salaCriada);
 
-      console.log(`>>> Usuario adicionado a sala - ${salaCriada} :`,socket.id);
+      console.log(`> Usuario adicionado a sala - ${salaCriada} :`,socket.id);
       let socketArray = [socket.rooms, socketIdTela[1]];
       socketsReference.push(socketArray);
 
