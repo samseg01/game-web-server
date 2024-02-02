@@ -65,7 +65,6 @@ io.on('connection', (socket) => {
 
   function verificaSalaUIDexistente(reference, socketUID){
     //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
-
     for(let i=0; i<reference.length; i++){
       let element = reference[i];
       if(element[1] === socketUID[1]){
@@ -79,13 +78,11 @@ io.on('connection', (socket) => {
     return salaString+'-BR01';
   }  
   function adicionaUsuario(socketO, salaCriada){
-    console.log(socketIO[1], salaCriada);
     if(salaCriada === null || salaCriada === ""){
       //verifica se ha uma sala com UID ja existente
       socketsReference.forEach(element =>{
       //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
         if(element[1] === socketO[1]){
-            
           let array = Array.from(element[0]);
           let sala = array[1];
           //socketO[0] === socket
