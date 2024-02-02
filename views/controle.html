@@ -32,9 +32,8 @@
             justify-content: center;
         }
         .controle {
-            height: 70%;
-            width: auto;
-            max-height: 250px;
+            height: auto;
+            width: 80%;
             border: 2px solid black;
             display: flex;
             div {
@@ -86,11 +85,11 @@
     <script>
         function tamanho(){
             const controle = document.querySelector('.controle');
-            let altura = getComputedStyle(controle).height.split('p');
-            let largura = getComputedStyle(controle).width.split('p');
+            let altura = getComputedStyle(controle).height.split('p')[0];
+            let largura = getComputedStyle(controle).width.split('p')[0];
             
-            if(parseInt(largura[0]) < parseInt(altura[0])*2){
-                controle.style.width = (parseInt(altura)*2)+'px';
+            if(parseInt(largura) !== parseInt(2*altura)){
+                controle.style.height = (parseInt(largura/2))+'px';
             }
             
         }
