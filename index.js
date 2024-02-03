@@ -10,6 +10,13 @@ const io = socketIO(server);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/console.html');
 });
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/views/admin.html');
+})
+
+app.get('/134013dj8njin30dsnk33', (req,res) => {
+  res.send(geraArrayResposta(socketsReference)).json;
+})
 
 let boo = false;
 let UID;
@@ -33,6 +40,19 @@ setInterval(() =>{
     });
   }
 }, 1000);
+
+function geraArrayResposta(reference){
+  let saida = []
+  reference.forEach(element => {
+    let space1 = Array.from(element[0]);
+    let space2 = element[1];
+
+    let array = [space1, space2];
+    saida.push(array);
+  })
+  return saida;
+}
+
 
 let sala_cont = 0;
 let sala;
@@ -140,20 +160,27 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`>>> Cliente desconectado: ${socket.id}`);
-    socketsReference.forEach(element => {
-    })
+    let indice;
+    for(let i=0; i<socketsReference.length; i++){
+      // indice = socketsReference.indexOf(socket);
+      let linha = socketsReference[i]
+      let primeiroSpace = Array.from(linha[0]);
+      sockeId = primeiroSpace[0];
+      if(sockeId === socket.id){
+        indice = socketsReference[i];
+        break;
+      }
+    }
     //exclui da lista
-    let indice = socketsReference.indexOf(socket);
     if (indice !== -1) {
       socketsReference.splice(indice, 1);
+      if(socketsReference.length === 0){
+        console.log('> não há clients logados.');
+      }
     }
   });
-  if(socketsReference.length === 0){
-    console.log('> não há clients logados.');
-  }
+  
 });
-// }
-
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Servidor ouvindo na porta ${PORT}`);

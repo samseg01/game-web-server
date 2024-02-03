@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>document</title>
+</head>
+<body>
+    <button id="btn" style="height: 20px; width: 40px;"></button>
+    <ul id="titulo">
+        <li>
+            <div>SOCKET_ID</div>
+            <div>SALA</div>
+            <div>UID</div>
+        </li>
+    </ul>
+    
+    <ul id="lista">
+        
+    </ul>
+    <style>
+        *{
+            font-family: "Inter", sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        #titulo {
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+            li {
+                height: 20px;
+                width: 100%;
+                max-width: 500px;
+                display: flex;
+                gap: 2px;
+                justify-content: space-evenly;
+                letter-spacing: 1.5px;
+                div {
+                    border: 2px solid black;
+                    width: max-content;
+                    padding: 0px 5px 0px 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex: auto;
+                }
+            }
+
+        }
+        #lista {
+            
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+            li {
+                height: 20px;
+                width: 100%;
+                max-width: 500px;
+                display: flex;
+                gap: 2px;
+                justify-content: space-evenly;
+                letter-spacing: 1.5px;
+                div {
+                    border: 2px solid black;
+                    width: max-content;
+                    padding: 0px 5px 0px 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex: auto;
+                }
+            }
+            
+        }
+    </style>
+    <script>
+        const lista = document.getElementById('lista');
+
+        document.getElementById('btn').addEventListener('click', ()=>{
+            mostra();
+        })
+
+        async function mostra(){
+            lista.innerHTML = "";
+            let gera = [];
+            let saida = []
+            try {
+                const response = await fetch('/134013dj8njin30dsnk33');
+                const data = await response.json();
+                gera = data;
+            } catch (error) {
+            console.error("Error:", error, );
+            }
+            for(let i=0 ; i<gera.length; i++){ 
+                
+                let linhaArray = gera[i];
+
+                let space0 = linhaArray[0];
+                let space00 = space0[0];
+                let space01 = space0[1];
+                let space1 = linhaArray[1];
+                
+                const linha = document.createElement('li');
+
+                const div1 = document.createElement('div');
+                console.log(space00)
+                div1.innerHTML = space00;
+
+                const div2 = document.createElement('div');
+                console.log(space01)
+                div2.innerHTML = space01;
+
+                const div3 = document.createElement('div');
+                console.log(space1)
+                div3.innerHTML = space1;
+
+                linha.appendChild(div1);
+                linha.appendChild(div2);
+                linha.appendChild(div3);
+
+                // lista.appendChild(linha);
+
+                // var itens = lista.getElementsByTagName("li");
+                lista.appendChild(linha);
+            }
+        };
+    </script>
+</body>
+</html>
