@@ -10,13 +10,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url('/styles/5f15ff01132b3a342bd22f59098a415e.png');
+    background-position: center;
+    background-size: cover;
 }
 .computador {
     height: 400px;
     width: 200px;
     border: 2px solid black;
 
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -26,12 +29,19 @@ body {
     width: 30px;
     background-color: black;
     position: relative;
-    top:50%;
+    top: 0px;
 }
 .qrcode {
     display: block;
 }
-button {
-    width: 50px;
-    height: 20px;
+#open {
+    height: 57px;
+    width: 70px;
+    position: absolute;
+    top: 40%;
+    left: 50.3%;
+    transform: translate(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

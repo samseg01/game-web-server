@@ -5,13 +5,15 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server)
+
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/console.html');
+  res.sendFile(__dirname + '/public/console.html');
 });
 app.get('/admin', (req, res) => {
-  res.sendFile(__dirname + '/views/admin.html');
+  res.sendFile(__dirname + '/public/admin.html');
 })
 
 app.get('/134013dj8njin30dsnk33', (req,res) => {
@@ -36,7 +38,7 @@ setInterval(() =>{
     app.get(`/KJDCIA7899nm8u7N9yn987NO&${UID}`, (req, res) => {
       //uuUID vindo do link aberto na tela 1
       UID = parseInt(req.url.split('&')[1]);
-      res.sendFile(__dirname + '/views/controle.html');
+      res.sendFile(__dirname + '/public/controle.html');
     });
   }
 }, 1000);

@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style-console.css">
     <title>console</title>
     <!-- <link rel="stylesheet" href="/styles/style.css"> -->
 </head>
 <body>
+    <button id="open"></button>
     <div class="computador">
+        <div class="qrcode" id="qrcode"></div>
         <div class="objeto" id="objeto"></div>
     </div>
-    <div class="qrcode" id="qrcode"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script>
+        const btnOpen = document.getElementById('open')
+        btnOpen.addEventListener('click', ()=>{
+            document.querySelector('.computador').style.display = 'flex';
+            btnOpen.style.display = 'none';
+        })
+
+
+
         //adicionar cash se for reiniciado e não perder o valor do id e voltar pra array
         let random_ID = parseInt(Math.random() * 100000000);
         async function link(){
@@ -30,10 +40,9 @@
             console.log("Success:", result.mensagem_back);
             return result.mensagem_back;
         }
-        
+        const code = document.getElementById("qrcode");
         async function gerarQRCode() {
             var textoParaQRCode = await link();
-            const code = document.getElementById("qrcode");
             var qrcode = new QRCode(code, {
                 text: textoParaQRCode,
                 width: 128,
@@ -49,8 +58,10 @@
         let valorLeft = 0;
         socket.on('mensagem', (mensagem) => {
             let msg = mensagem;
-            const objeto = document.getElementById('objeto');
-
+            if(msg == "conectado"){
+                code.style.display = 'none'
+                objeto.style.display = 'block';
+            }
             if(msg=='esquerda'){
                 valorLeft = valorLeft-10;
                 objeto.style.left = valorLeft+'px';
@@ -68,39 +79,7 @@
         
     </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            height: 100vh;
-            width: 100%;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .computador {
-            height: 400px;
-            width: 200px;
-            border: 2px solid black;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .objeto {
-            display: block;
-            height: 30px;
-            width: 30px;
-            background-color: black;
-            position: relative;
-            top: 0px;
-        }
-        .qrcode {
-            display: block;
-        }
+        
     </style>
 </body>
 </html>
