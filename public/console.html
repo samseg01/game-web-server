@@ -8,6 +8,7 @@
     <!-- <link rel="stylesheet" href="/styles/style.css"> -->
 </head>
 <body>
+    <div class="gif-down-content"></div>
     <button id="open"></button>
     <div class="computador">
         <div class="qrcode" id="qrcode"></div>
@@ -18,6 +19,7 @@
     <script>
         const btnOpen = document.getElementById('open')
         btnOpen.addEventListener('click', ()=>{
+            document.querySelector('.gif-down-content').style.display = 'none'
             document.querySelector('.computador').style.display = 'flex';
             btnOpen.style.display = 'none';
         })

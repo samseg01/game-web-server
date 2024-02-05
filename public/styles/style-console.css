@@ -36,13 +36,34 @@ body {
     display: block;
 }
 #open {
-    height: 57px;
-    width: 70px;
+    height: 9vh;
+    width: 5vw;
     position: absolute;
-    top: 40%;
+    top: 40.6%;
     left: 50.3%;
     transform: translate(-50%);
     background-color: transparent;
+    opacity: 0%;
+    background-image: url('/styles/icons8-reproduzir-48.png');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
     border: none;
     cursor: pointer;
+}
+#open:hover {
+    opacity: 70%;
+    transition: opacity 2s;
+}
+
+.gif-down-content {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 31%;
+    left: 50.3%;
+    transform: translate(-50%);
+    background-image: url('/styles/animation-down.gif');
+    border: none;
+    background-size: 100%;
 }
