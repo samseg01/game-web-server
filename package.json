@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "fastify": "^4.25.2",
     "socket.io": "^4.7.4"
   }
 }
