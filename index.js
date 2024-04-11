@@ -127,7 +127,6 @@ io.on('connection', (socket) => {
     }
   }
 
-
   // Lógica para lidar com eventos do cliente
   socket.on('mensagem', (mensagem) => {
     id = socket.id;
@@ -161,7 +160,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`>>> Cliente desconectado: ${socket.id}`);
+    console.log(`>>> Cliente desconectado: ${socket.id} ${Array.from(socketsReference)}`);
     let indice;
     for(let i=0; i<socketsReference.length; i++){
       // indice = socketsReference.indexOf(socket);

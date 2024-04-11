@@ -53,8 +53,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
-    height: 500px;
-    width: 630px;
+    height: 79vh;
+    width: auto;
     border: 7px solid black;
     box-shadow: black 2px 2px 2px;
     background-color: rgb(235, 227, 227);
@@ -84,9 +84,18 @@ body {
     background-color: white;
 
     display: flex;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+
+    p {
+        margin-top: 14px;
+        font-size: 15px;
+        font-family: "Silkscreen", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 }
 #down-icon {
     height: 50px;
@@ -114,6 +123,22 @@ body {
     opacity: 100%;
     transition: all 0.5s linear;
 }
+canvas {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    width: auto;
+    background-color: #191919;
+    border: 2px solid black;
+    color: rgb(56, 56, 56)
+}
+#play-over {
+    position: absolute;
+    display: none;
+    width: 50px;
+    height: 50px;
+}
 
 @keyframes aparece {
     0% {
@@ -131,11 +156,11 @@ body {
         scale: 100%;
     }
 }
-#objeto{
+/* #objeto{
     width: 20px;
     height: 20px;
     position: absolute;
 
     background-color: white;
     display: none;
-}
+} */

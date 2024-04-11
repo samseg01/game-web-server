@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style-console.css">
     <title>console</title>
 </head>
@@ -10,105 +13,21 @@
     <button id="theme"></button>
     <section class="room">
         <img src="/styles/animation-down.gif" id="down-icon">
-
-        <button id="play">
-
-        </button>
+        <button id="play"></button>
     </section>
 
     <section class="computador">
         <div class="visor">
-            <div class="qr-code" id="qr-code"></div>
-            <!-- <canvas></canvas> -->
-            <div id="objeto"></div>
+            <div class="qr-code" id="qr-code">
+                <p id="text">aponte a câmera do celular...</p>
+            </div>
+            <canvas id="canvas" width="600" height="600"> 
+            </canvas>         
+            <button id="play-over"></button>
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <script>
-        const body = document.querySelector('body')
-        const btn = document.getElementById('theme')
-
-        btn.addEventListener('click', ()=>{
-            console.log(window.getComputedStyle(body).getPropertyValue("background-color"))
-            if(window.getComputedStyle(body).getPropertyValue("background-color") == 'rgb(0, 0, 0)'){
-                body.style.backgroundColor = 'white'
-                btn.style.backgroundImage = "url('/styles/lamp.svg')"
-                btn.style.border = '2px solid black';
-                document.querySelector('.computador').style.border = '7px solid black';
-            }else {
-                btn.style.backgroundImage = "url('/styles/lamp-apagada.svg')"
-                body.style.backgroundColor = 'black'
-                btn.style.border = '2px solid white';
-                document.querySelector('.computador').style.border = 'none';
-            }
-        })
-
-        const btnOpen = document.getElementById('play')
-        btnOpen.addEventListener('click', ()=>{
-            document.getElementById('down-icon').style.display = 'none'
-            document.querySelector('.computador').style.display = 'flex';
-            btnOpen.style.display = 'none';
-            document.querySelector('.qr-code').style.animation = 'aparece 1s linear';
-
-        })
-
-        //adicionar cash se for reiniciado e não perder o valor do id e voltar pra array
-        let random_ID = parseInt(Math.random() * 100000000);
-        async function link(){
-            console.log(random_ID);
-
-            const response = await fetch('/config', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({mensagem_front : random_ID}),
-            });
-            const result = await response.json();
-            console.log("Success:", result.mensagem_back);
-            return result.mensagem_back;
-        }
-
-        const code = document.getElementById("qr-code");
-
-        async function gerarQRCode() {
-            var textoParaQRCode = await link();
-            var qrcode = new QRCode(code, {
-                text: textoParaQRCode,
-                width: 140,
-                height: 140
-            });
-        }
-        gerarQRCode();
-
-        const socket = io();
-
-        // Lidar com mensagens recebidas do servidor
-        const objeto = document.getElementById('objeto')
-        let valorTop = 0;
-        let valorLeft = 0;
-        socket.on('mensagem', (mensagem) => {
-            let msg = mensagem;
-            console.log(msg)
-            if(msg == "conectado"){
-                code.style.display = 'none'
-                objeto.style.display = 'block';
-            }
-            if(msg=='esquerda'){
-                valorLeft = valorLeft-10;
-                objeto.style.left = valorLeft+'px';
-            }else if(msg=='direita'){
-                valorLeft = valorLeft+10;
-                objeto.style.left = valorLeft+'px';
-            }else if(msg=='cima'){
-                valorTop = valorTop-10;
-                objeto.style.top = valorTop+'px';
-            }else if(msg=='baixo'){
-                valorTop = valorTop+10;
-                objeto.style.top = valorTop+'px';
-            }
-        });
-    </script>
+    <script src="./scripts/console-config.js"></script>
 </body>
 </html>
