@@ -224,7 +224,7 @@ function loop(){
 
     loopId = setTimeout(() => {
         loop()
-    }, 100)
+    }, 300)
 }
 
 loop()
