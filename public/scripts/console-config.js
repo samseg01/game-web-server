@@ -9,9 +9,13 @@ setInterval(()=>{
         computador.style.width = `${tamanhoH[0]*1.26}px`
     }
 }, 100)
-
 btn.addEventListener('click', ()=>{
-    console.log(window.getComputedStyle(body).getPropertyValue("background-color"))
+    // console.log(window.getComputedStyle(body).getPropertyValue("background-color"))
+    const somInterruptor = new Audio('/scripts/som-interruptor.mp3')
+    somInterruptor.currentTime = 0.2;
+    somInterruptor.volume = 1
+    somInterruptor.play()
+
     if(window.getComputedStyle(body).getPropertyValue("background-color") == 'rgb(0, 0, 0)'){
         body.style.backgroundColor = 'white'
         btn.style.backgroundImage = "url('/styles/lamp.svg')"
@@ -27,6 +31,10 @@ btn.addEventListener('click', ()=>{
 
 const btnOpen = document.getElementById('play')
 btnOpen.addEventListener('click', ()=>{
+    const somIntro = new Audio('/scripts/intro.mp3');
+    somIntro.currentTime = 0.3;
+    somIntro.volume = 0.3;
+    somIntro.play();
     document.getElementById('down-icon').style.display = 'none'
     computador.style.display = 'flex';
     btnOpen.style.display = 'none';
