@@ -108,6 +108,8 @@ let cobra = [
     {x : 300, y : 300},
     {x : 330, y : 300},
 ]
+let contadorComida = 0
+let timeLoop = 300
 let comida = {
     x : random(),
     y : random(),
@@ -190,9 +192,16 @@ function comeu(){
             x = random()
             y = random()
         }
+        contadorComida++
         comida.x = x
         comida.y = y
-        comida.color = 'green'        
+        comida.color = 'green'   
+
+        console.log(contadorComida)     
+        if(contadorComida%3==0){
+            timeLoop = timeLoop-20
+            console.log('timeLoop', timeLoop)
+        }
     }
 }
 
@@ -207,12 +216,12 @@ function colision(){
     if(parede || selfColision){
         direction = undefined;
         document.getElementById('play-over').style.display = 'block'
+        timeLoop = 300
     }
 }
 
-
 let loopId
-function loop(){
+function loop(tL){
     clearInterval(loopId)
     ctx.clearRect(0, 0, 600, 600)
     drawGrid()
@@ -223,11 +232,11 @@ function loop(){
     comeu()
 
     loopId = setTimeout(() => {
-        loop()
-    }, 300)
+        loop(timeLoop)
+    }, tL)
 }
 
-loop()
+loop(timeLoop)
 
 document.getElementById('play-over').addEventListener('click', ()=>{
     cobra = [

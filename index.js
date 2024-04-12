@@ -128,8 +128,8 @@ io.on('connection', (socket) => {
 
   // Lógica para lidar com eventos do cliente
   socket.on('mensagem', (mensagem) => {
-    console.log(mensagem)
-    console.log(socketIdTela.socket.id, socketIdTela.socket.rooms, socketIdTela.UID)
+    // console.log(mensagem)
+    // console.log(socketIdTela.socket.id, socketIdTela.socket.rooms, socketIdTela.UID)
     id = socket.id;
 
     let room
@@ -144,7 +144,7 @@ io.on('connection', (socket) => {
       idSocket = roomArray[0];
 
       if(socket.id == idSocket){
-        console.log(`>>> Mensagem recebida de ${id} que pertence a sala ${roomArray[1]}: ${mensagem}`);
+        // console.log(`>>> Mensagem recebida de ${id} que pertence a sala ${roomArray[1]}: ${mensagem}`);
         let sala = roomArray[1];
         io.to(sala).emit('mensagem', mensagem);
       }
