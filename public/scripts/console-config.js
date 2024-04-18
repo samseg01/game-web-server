@@ -95,20 +95,26 @@ let direction = ""
 socket.on('mensagem', (mensagem) => {
     let msg = mensagem;
     console.log(msg)
-    if(msg == "conectado"){
-        code.style.display = 'none'
-        canvas.style.display = 'block';
+
+    switch(msg){
+        case "conectado":
+            code.style.display = 'none'
+            canvas.style.display = 'block'
+            break;
+        case "desconectado":
+            code.style.display = 'flex'
+            canvas.style.display = 'none'
+            break;
+        case "esquerda":
+            direction=msg;
+        case "direita":
+            direction=msg;
+        case "cima":
+            direction=msg;
+        case "baixo":
+            direction=msg;
     }
-    if(msg=='esquerda'){
-        direction=msg;
-    }else if(msg=='direita'){
-        direction=msg;
-    }else if(msg=='cima'){
-        direction=msg;
-    }else if(msg=='baixo'){
-        direction=msg;
-    }
-});
+})
 
 const ctx = canvas.getContext("2d");
 const tamanho = 30

@@ -172,6 +172,25 @@ io.on('connection', (socket) => {
         console.log('> não há clients logados.');
       }
     }
+    id = socket.id;
+
+    let room
+    let roomArray
+    let idSocket
+
+    //socketsReference
+    //[ Set(2) { 'SmI9vUmNBZ-6_qAGAAAD', '148442-BR01' }, 18499632 ]
+    socketsReference.forEach(element => {
+      room = element[0];
+      roomArray = Array.from(room);
+      idSocket = roomArray[0];
+
+      if(socket.id == idSocket){
+        // console.log(`>>> Mensagem recebida de ${id} que pertence a sala ${roomArray[1]}: ${mensagem}`);
+        let sala = roomArray[1];
+        io.to(sala).emit('mensagem', 'desconectado');
+      }
+    })
   });
   
 });
