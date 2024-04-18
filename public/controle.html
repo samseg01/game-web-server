@@ -2,40 +2,37 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <link rel="stylesheet" href="styles/style-controle.css">
     <title>controle</title>
 </head>
 <body>
-    <section class="controle">
-        <div class="direction content">
-            <div class="container">
-                <div class="linha"></div>
-                <div class="linha">
-                    <div class="bloco"></div>
-                    <button class="cima bloco" id="cima"></button>
-                    <div class="bloco"></div>
-                </div>
-                <div class="linha">
-                    <button class="esquerda bloco" id="esquerda"></button>
-                    <div class="bloco"></div>
-                    <button class="direita bloco" id="direita"></button>
-                </div>
-                <div class="linha">
-                    <div class="bloco"></div>
-                    <button class="baixo bloco" id="baixo"></button>
-                    <div class="bloco"></div>
-                </div>
-                <div class="linha"></div>
+    <section id="vira-tela">
+        <img src="./styles/icons8-girar-a-paisagem.gif" alt="">
+        <h1>vire a tela</h1>
+    </section>
+    <section id="controle">
+        <div class="container esquerda">
+            <div class="linha um">
+                <button id="cima"></button>
+            </div>
+            <div class="linha dois">
+                <button id="esquerda"></button>
+                <button id="center"></button>
+                <button id="direita"></button>
+            </div>
+            <div class="linha tres">
+                <button id="baixo"></button>
             </div>
         </div>
-        <div class="enter content">
-            <button id="enter"></button>
+        <div class="container direita">
+            <button id="boost"></button>
         </div>
     </section>
-    <style>
-        
-    </style>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <script src="./scripts/controle-config.js"></script>
 </body>

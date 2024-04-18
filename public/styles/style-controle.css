@@ -1,57 +1,83 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 body {
-    width: 100%;
     height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.controle {
+#controle {
     height: auto;
     width: 80%;
-    border: 2px solid black;
-
+    border-radius: 5vh;
+    background-color: blueviolet;
     display: flex;
-    flex-direction: row;
-    background-color: #b2a052;
 }
-.content {
-    width: 50%;
+.container {
     height: 100%;
+    width: 50%;
+}
+.esquerda{
+    gap: 5px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+}
+.direita {
+    display: flex;
     align-items: center;
     justify-content: center;
 }
-.direction {
-}   
-.container{
-    width: 80%;
-    height: 80%;
-}
-.linha {
+.linha{
+    height: 20vh;
     width: 100%;
-    height: 20%;
+}
+button {
+    height: 100%;
+    width: auto;
+    border-radius: 1.5vh;
+}
+.um, .tres{
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    button {
+}
+.dois {
+    display: flex;
+    justify-content: center;
+    #center {
+        background-color: transparent;
+        border: none;
     }
 }
-.bloco {
-    width: 20%;
-    height: 100%;
-    border-radius: 4px;
-}
-.enter {
-}
-#enter {
-    height: 50%;
-    width: 50%;
+#boost {
+    height: 70%;
     border-radius: 100%;
+}
+#vira-tela{
+    height: 100vh;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    img {
+        width: 20%;
+    }
+}
+
+@media(orientation: portrait){
+    #controle{
+        display: none;
+    }
+    #vira-tela {
+        display: flex;
+    }
 }
