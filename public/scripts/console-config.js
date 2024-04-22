@@ -107,12 +107,16 @@ socket.on('mensagem', (mensagem) => {
             break;
         case "esquerda":
             direction=msg;
+            break;
         case "direita":
             direction=msg;
+            break;
         case "cima":
             direction=msg;
+            break;
         case "baixo":
             direction=msg;
+            break;
     }
 })
 
@@ -124,6 +128,8 @@ let cobra = [
 ]
 let contadorComida = 0
 let timeLoop = 300
+let lastScore = 0
+let bestScore = 0
 let comida = {
     x : random(),
     y : random(),
@@ -211,7 +217,7 @@ function comeu(){
         comida.y = y
         comida.color = 'green'   
 
-        console.log(contadorComida)     
+        // console.log(contadorComida)     
         if(contadorComida%3==0){
             timeLoop = timeLoop-20
             console.log('timeLoop', timeLoop)
@@ -229,8 +235,15 @@ function colision(){
     })
     if(parede || selfColision){
         direction = undefined;
-        document.getElementById('play-over').style.display = 'block'
-        timeLoop = 300
+        lastScore = contadorComida;
+        if(lastScore > bestScore){
+            bestScore = lastScore
+        }
+        document.getElementById('score').innerText = 'SCORE: ' + lastScore;
+        document.getElementById('best-score').innerText = 'best score: ' + bestScore;
+
+        document.getElementById('best-score')
+        document.querySelector('.screen-play-over').style.display = 'flex'
     }
 }
 
@@ -257,5 +270,7 @@ document.getElementById('play-over').addEventListener('click', ()=>{
         {x : 300, y : 300},
         {x : 330, y : 300},
     ]
-    document.getElementById('play-over').style.display = 'none'
+    timeLoop = 300
+    contadorComida = 0
+    document.querySelector('.screen-play-over').style.display = 'none'
 })
