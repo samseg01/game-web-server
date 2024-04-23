@@ -31,7 +31,6 @@ app.post('/config', (req, res) => {
   console.log('>>> GAME_CONSOLE LIGADO!!!');
   res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&${UID}`});
 });
-let i=1;
 
 setInterval(() =>{
   if(boo==true){

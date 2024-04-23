@@ -94,7 +94,7 @@ let direction = ""
 
 socket.on('mensagem', (mensagem) => {
     let msg = mensagem;
-    console.log(msg)
+    // console.log(msg)
 
     switch(msg){
         case "conectado":
