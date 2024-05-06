@@ -78,7 +78,7 @@ const code = document.getElementById("qr-code");
 
 async function gerarQRCode() {
     var textoParaQRCode = await link();
-    var qrcode = new QRCode(code, {
+    new QRCode(code, {
         text: textoParaQRCode,
         width: 140,
         height: 140
