@@ -88,7 +88,7 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-
+    cursor: none;
     p {
         margin-top: 14px;
         font-size: 15px;

@@ -70,7 +70,7 @@ async function link(){
         body: JSON.stringify({mensagem_front : random_ID}),
     });
     const result = await response.json();
-    console.log("Success:", result.mensagem_back);
+    // console.log("Success:", result.mensagem_back);
     return result.mensagem_back;
 }
 
@@ -220,7 +220,7 @@ function comeu(){
         // console.log(contadorComida)     
         if(contadorComida%3==0){
             timeLoop = timeLoop-20
-            console.log('timeLoop', timeLoop)
+            // console.log('timeLoop', timeLoop)
         }
     }
 }
