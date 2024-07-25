@@ -70,7 +70,7 @@ async function link(){
         body: JSON.stringify({mensagem_front : random_ID}),
     });
     const result = await response.json();
-    // console.log("Success:", result.mensagem_back);
+    console.log("Success:", result.mensagem_back);
     return result.mensagem_back;
 }
 
@@ -91,10 +91,16 @@ const socket = io();
 // Lidar com mensagens recebidas do servidor
 const canvas = document.getElementById('canvas')
 let direction = ""
+let boost = false
 
 socket.on('mensagem', (mensagem) => {
     let msg = mensagem;
-    // console.log(msg)
+    console.log(msg)
+    if(msg == "boost-down"){
+        boost = true;
+    }else if(msg == "boost-up") {
+        boost = false;
+    }
 
     switch(msg){
         case "conectado":
@@ -197,6 +203,7 @@ function moverCobra(){
     if(direction == "baixo"){
         cobra.push({ x : head.x, y : head.y + tamanho})
     }
+
 }
 
 function comeu(){
@@ -217,11 +224,6 @@ function comeu(){
         comida.y = y
         comida.color = 'green'   
 
-        // console.log(contadorComida)     
-        if(contadorComida%3==0){
-            timeLoop = timeLoop-20
-            // console.log('timeLoop', timeLoop)
-        }
     }
 }
 
@@ -246,6 +248,18 @@ function colision(){
         document.querySelector('.screen-play-over').style.display = 'flex'
     }
 }
+const timeLoopAnt = timeLoop
+function setBoost(boostIn){
+    timeBoost = timeLoop-200;
+    // console.log('in', timeLoop, timeBoost, 'const===>', timeLoopAnt)
+    if(boostIn && timeBoost == timeLoop-200 && timeBoost == timeLoopAnt-200){
+        timeLoop = timeBoost
+        // console.log('=========> BOOST-TRUE',timeLoop)
+    }else if(boostIn == false ){
+        // console.log('=========> BOOST-OFF', timeLoop)
+        timeLoop = timeLoopAnt
+    }
+}
 
 let loopId
 function loop(tL){
@@ -257,6 +271,8 @@ function loop(tL){
     colision()
     moverCobra()
     comeu()
+    setBoost(boost)
+    // console.log(timeLoop, tL)
 
     loopId = setTimeout(() => {
         loop(timeLoop)
@@ -264,6 +280,7 @@ function loop(tL){
 }
 
 loop(timeLoop)
+
 
 document.getElementById('play-over').addEventListener('click', ()=>{
     cobra = [

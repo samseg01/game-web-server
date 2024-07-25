@@ -41,3 +41,10 @@ document.getElementById('cima').addEventListener('click', () =>{
 document.getElementById('baixo').addEventListener('click', () =>{
     socket.emit('mensagem', 'baixo');
 })
+const boostButton = document.getElementById('boost')    
+boostButton.addEventListener('mousedown', ()=>{
+    socket.emit('mensagem', 'boost-down')
+})
+boostButton.addEventListener('mouseup', ()=>{
+    socket.emit('mensagem', 'boost-up')
+})
