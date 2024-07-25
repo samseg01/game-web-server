@@ -70,7 +70,7 @@ async function link(){
         body: JSON.stringify({mensagem_front : random_ID}),
     });
     const result = await response.json();
-    console.log("Success:", result.mensagem_back);
+    // console.log("Success:", result.mensagem_back);
     return result.mensagem_back;
 }
 
@@ -95,7 +95,7 @@ let boost = false
 
 socket.on('mensagem', (mensagem) => {
     let msg = mensagem;
-    console.log(msg)
+    // console.log(msg)
     if(msg == "boost-down"){
         boost = true;
     }else if(msg == "boost-up") {
@@ -280,7 +280,6 @@ function loop(tL){
 }
 
 loop(timeLoop)
-
 
 document.getElementById('play-over').addEventListener('click', ()=>{
     cobra = [
