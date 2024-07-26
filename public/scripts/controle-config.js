@@ -45,6 +45,13 @@ const boostButton = document.getElementById('boost')
 boostButton.addEventListener('mousedown', ()=>{
     socket.emit('mensagem', 'boost-down')
 })
+boostButton.addEventListener('touchstart', ()=>{
+    socket.emit('mensagem', 'boost-down')
+})
+
 boostButton.addEventListener('mouseup', ()=>{
+    socket.emit('mensagem', 'boost-up')
+})
+boostButton.addEventListener('touchend', ()=>{
     socket.emit('mensagem', 'boost-up')
 })
