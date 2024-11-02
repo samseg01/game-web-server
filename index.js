@@ -16,31 +16,27 @@ app.get('/admin', (req, res) => {
   res.sendFile(__dirname + '/public/admin.html');
 })
 
-app.get('/134013dj8njin30dsnk33', (req,res) => {
-  res.send(geraArrayResposta(socketsReference)).json;
-})
+// app.get('/134013dj8njin30dsnk33', (req,res) => {
+//   res.send(geraArrayResposta(socketsReference)).json;
+// })
 
-let boo = false;
 let UID;
 
 app.use(bodyParser.json());
 app.post('/config', (req, res) => {
   UID = req.body.mensagem_front;
-  boo = true;
 
   console.log('>>> GAME_CONSOLE LIGADO!!!');
-  res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO&${UID}`});
+  res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO${UID}`});
 });
 
-setInterval(() =>{
-  if(boo==true){
-    app.get(`/KJDCIA7899nm8u7N9yn987NO&${UID}`, (req, res) => {
-      //uuUID vindo do link aberto na tela 1
-      UID = parseInt(req.url.split('&')[1]);
-      res.sendFile(__dirname + '/public/controle.html');
-    });
-  }
-}, 1000);
+function criaNovoLink(UID){
+  return (`/KJDCIA7899nm8u7N9yn987NO&${UID}`,(req, res)=>{
+    res.sendFile(__dirname + '/public/controle.html');
+  })
+}
+
+app.use(criaNovoLink(UID))
 
 function geraArrayResposta(reference){
   let saida = []
