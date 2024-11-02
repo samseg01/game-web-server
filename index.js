@@ -30,13 +30,13 @@ app.post('/config', (req, res) => {
   res.send({mensagem_back : `http://${req.headers.host}/KJDCIA7899nm8u7N9yn987NO${UID}`});
 });
 
-function criaNovoLink(UID){
+function criaNovoLink(){
   return (`/KJDCIA7899nm8u7N9yn987NO&${UID}`,(req, res)=>{
     res.sendFile(__dirname + '/public/controle.html');
   })
 }
 
-app.use(criaNovoLink(UID))
+app.use(criaNovoLink())
 
 function geraArrayResposta(reference){
   let saida = []
